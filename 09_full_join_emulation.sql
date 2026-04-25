@@ -5,3 +5,17 @@
 USE join_lab;
 
 -- TODO: Write a query your instructor can run; add a short comment on your strategy
+-- include every project and its assigned staff, then add staff who never appear in project_staff
+SELECT p.title AS project_title,
+    s.name AS staff_name
+FROM projects p
+LEFT JOIN project_staff ps ON p.proj_id = ps.proj_id
+LEFT JOIN staff s ON ps.staff_id = s.staff_id
+
+UNION
+
+SELECT NULL AS project_title,
+    s.name AS staff_name
+FROM staff s
+LEFT JOIN project_staff ps ON s.staff_id = ps.staff_id
+WHERE ps.proj_id IS NULL;
